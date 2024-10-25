@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درس جمع السرعات المتجهة</title>
+    <style>
+        /* نمط الصفحة العامة */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #1a0033;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* صفحة الفيزياء */
+        #physics-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: #1a0033;
+            color: #d1b3ff;
+            text-align: center;
+            position: relative;
+        }
+
+        /* الأشكال */
+        .shape {
+            position: absolute;
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out;
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 35px solid #d1b3ff;
+        }
+
+        .circle {
+            width: 20px;
+            height: 20px;
+            background-color: #d1b3ff;
+            border-radius: 50%;
+        }
+
+        .formula {
+            font-size: 1.2rem;
+            color: #d1b3ff;
+        }
+
+        /* صفحة خطأ انقطاع الإنترنت */
+        #error-page {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #ff5555;
+            text-align: center;
+            background: black;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10;
+        }
+
+        #error-page h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        #error-page p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        #reload-button {
+            border: 2px solid #ff5555;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            color: #ff5555;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* صفحة التحميل */
+        #loading-page {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: #1a0033; /* نفس اللون البنفسجي للصفحة الرئيسية */
+            color: #d1b3ff;
+            text-align: center;
+        }
+
+        #loading-page p {
+            font-size: 1.5rem;
+        }
+
+        /* تباعد عشوائي للأشكال حول النص */
+        .shape:nth-child(1) { bottom: 0%; left: 90%; }
+        .shape:nth-child(2) { top: 15%; right: 8%; }
+        .shape:nth-child(3) { top:20%; left: 12%; }
+        .shape:nth-child(4) { bottom: 25%; right: 20%; }
+        .shape:nth-child(5) { top: 53%; left: 91%; transform: rotate(-10deg); }
+        .shape:nth-child(6) { bottom: 25%; right: 95%; transform: rotate(15deg); }
+        .shape:nth-child(7) { bottom: 65%; left:80%; }
+        .shape:nth-child(8) { bottom: 25%; right: 60%; }
+
+        /* حركة الأشكال */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- صفحة الفيزياء -->
+    <div id="physics-page">
+        <h1>درس الفيزياء: جمع السرعات المتجهة</h1>
+        <p>جاري التحميل...</p>
+
+        <!-- الأشكال المتناثرة -->
+        <div class="shape triangle"></div>
+        <div class="shape triangle"></div>
+        <div class="shape circle"></div>
+        <div class="shape circle"></div>
+        <div class="shape formula">v = d / t</div> <!-- قانون السرعة -->
+        <div class="shape formula">a² + b² = c²</div> <!-- نظرية فيثاغورس -->
+    </div>
+
+    <!-- صفحة التحميل المؤقت -->
+    <div id="loading-page">
+        <p>جاري التحميل...</p>
+    </div>
+
+    <!-- صفحة خطأ انقطاع الإنترنت -->
+    <div id="error-page">
+        <h1>⚠️ خطأ: انقطع الإنترنت</h1>
+        <p>لا توجد إشارة في غزة. قد تم قطع الاتصال.</p>
+        <button id="reload-button">إعادة التحميل</button>
+    </div>
+
+    <script>
+        // وظيفة لعرض صفحة التحميل المؤقت
+        function showLoadingPage() {
+            document.getElementById("error-page").style.display = "none";
+            document.getElementById("loading-page").style.display = "flex";
+            setTimeout(() => {
+                document.getElementById("loading-page").style.display = "none";
+                document.getElementById("error-page").style.display = "flex";
+            }, 5000); // عرض صفحة التحميل لمدة 5 ثواني
+        }
+
+        // عرض رسالة الخطأ بعد 30 ثانية من تحميل الصفحة
+        setTimeout(() => {
+            document.getElementById("physics-page").style.display = "none";
+            document.getElementById("error-page").style.display = "flex";
+            document.body.style.backgroundColor = "#000"; // تغيير الخلفية إلى الأسود
+        }, 30000);
+
+        // زر إعادة التحميل
+        document.getElementById("reload-button").addEventListener("click", showLoadingPage);
+    </script>
+</body>
+</html>
